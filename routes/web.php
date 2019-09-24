@@ -14,3 +14,15 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/data-binding', function () {
+    return view('data-binding');
+});
+
+Route::get('/v-for', function () {
+    return view('v-for');
+});
+
+Route::get('/events', function () {
+    return view('events');
+});
