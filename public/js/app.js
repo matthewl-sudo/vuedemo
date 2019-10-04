@@ -12767,58 +12767,141 @@ Vue.component('example-component', __webpack_require__(/*! ./components/ExampleC
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+// const app = new Vue({
+//     el: '#app',
+//     data: {
+//         firstName: 'Matt',
+//         lastName: 'Larose'
+//     }
+// });
+// const eventsapp = new Vue({
+//     el: '#events-app',
+//     data: {
+//     },
+//     methods:{
+//         buttonClicked(){
+//             alert('Clicked');
+//         },
+//         elementHovered(){
+//             alert('Hovered');
+//         }
+//     }
+// });
+//
+// const vforapp = new Vue({
+//     el: '#vfor-app',
+//     data: {
+//         aSong:'',
+//         anArtist:'',
+//         songs:[
+//             {"track":"Old Town Road", "artist":"Lil Nas"},
+//             {"track":"Some Song", "artist":"some artist"},
+//             {"track":"Another Song", "artist":"some other artist"},
+//             {"track":"AND Another Song","artist":"another artist"},
+//         ],
+//     },
+//     methods:{
+//         buttonClicked(){
+//             var song = {"track": this.aSong, "artist": this.anArtist}
+//             this.songs.push(song);
+//         },
+//         removeClicked(){
+//             this.songs.pop();
+//
+//         },
+//         emptyClicked(){
+//            // this.songs.splice(0, this.songs.length);
+//            // or alternatively...
+//            this.songs = [];
+//         }
+//     }
+// });
+// Vue.component('record',{
+//     template: `<div class="box">
+//             <h2>This is a Tweet</h2>
+//             <p><slot></slot></p>
+//         </div>`
+// });
+// new Vue({
+//     el: '#imagebinding',
+//     data:{
+//         imgUrl:'',
+//         pictureofcat: "/img/cat.png",
+//         hasBorder: false
+//     },
+//     methods:{
+//         changeImage(){
+//             this.pictureofcat = this.imgUrl
+//         },
+//         giveBorder(){
+//             if (this.hasBorder == true) {
+//                 this.hasBorder = false;
+//             }
+//             else {
+//                 this.hasBorder = true;
+//             }
+//         }
+//     }
+// });
 
-var app = new Vue({
-  el: '#app',
-  data: {
-    firstName: 'Matt',
-    lastName: 'Larose'
-  }
-});
-var eventsapp = new Vue({
-  el: '#events-app',
-  data: {},
+Vue.component('playlist', {
+  template: "\n    <div>\n        Title:<input name=\"title\" v-model=\"newSong.title\">\n        Artist: <input name=\"artist\" v-model=\"newSong.artist\">\n        <button class=\"btn btn-sm\"type=\"button\" @click=\"buttonClicked()\" name=\"button\">Add Song</button>\n        <ul class=\"list-group\">\n            <li v-for=\"(song, index) in playlist\"><br>\n                <p class=\" \" :class=\"{'highlight' : song.favorite }\">Title: {{song.title}}</p>\n                <small>Artist: {{song.artist}}</small><br>\n                <button class=\"btn btn-sm btn-danger\" type=\"button\" @click=\"removeClicked(index)\" name=\"button\">Remove Song</button>\n                <button class=\"btn btn-sm\" :class=\"{ 'btn-dark' : !song.favorite , 'btn-success' : song.favorite }\" type=\"button\" @click=\"toggleFavorite(index)\" name=\"button\">Favorite</button>\n            </li>\n        </ul>\n    </div>\n    ",
+  data: function data() {
+    return {
+      newSong: {
+        title: " ",
+        artist: " "
+      },
+      playlist: [{
+        artist: "Lil Nas",
+        title: "Old Town Road",
+        favorite: false
+      }, {
+        artist: "Lizzo",
+        title: "That lizzo Song",
+        favorite: false
+      }, {
+        artist: "Shawn Mendes & Camilla Cabello",
+        title: "Call me Senorita",
+        favorite: false
+      }]
+    };
+  },
   methods: {
     buttonClicked: function buttonClicked() {
-      alert('Clicked');
+      this.playlist.push({
+        title: this.newSong.title,
+        artist: this.newSong.artist
+      });
+      this.newSong.title = " ";
+      this.newSong.artist = " ";
     },
-    elementHovered: function elementHovered() {
-      alert('Hovered');
+    removeClicked: function removeClicked(index) {
+      this.$delete(this.playlist, index);
+    },
+    toggleFavorite: function toggleFavorite(index) {
+      this.playlist[index].favorite = !this.playlist[index].favorite;
     }
   }
 });
-var vforapp = new Vue({
-  el: '#vfor-app',
+var playlist = new Vue({
+  el: '#playlist',
   data: {
     aSong: '',
     anArtist: '',
     songs: [{
-      track: "Old Town Road",
-      artist: "Lil Nas"
+      "track": "Old Town Road",
+      "artist": "Lil Nas"
     }, {
-      track: "Some Song",
-      artist: "some artist"
+      "track": "Some Song",
+      "artist": "some artist"
     }, {
-      track: "Another Song",
-      artist: "some other artist"
+      "track": "Another Song",
+      "artist": "some other artist"
     }, {
-      track: "AND Another Song",
-      artist: "another artist"
+      "track": "AND Another Song",
+      "artist": "another artist"
     }]
-  },
-  methods: {
-    buttonClicked: function buttonClicked() {
-      // var song = {track}
-      this.songs.track.push(this.aSong);
-      this.songs.artist.push(this.anArtist);
-    },
-    removeClicked: function removeClicked() {
-      this.songs.pop(this.aSong);
-      this.songs.pop(this.anArtist);
-    },
-    emptyClicked: function emptyClicked() {
-      this.songs.splice(0, this.songs.length);
-    }
   }
 });
 

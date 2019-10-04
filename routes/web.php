@@ -26,3 +26,9 @@ Route::get('/v-for', function () {
 Route::get('/events', function () {
     return view('events');
 });
+Route::get('/more-binding', function () {
+    return view('binding');
+});
+Route::get('/playlist', function () {
+    return view('playlist');
+});
